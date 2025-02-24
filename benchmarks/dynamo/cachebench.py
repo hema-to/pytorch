@@ -72,9 +72,9 @@ def _run_torchbench_model(
 ) -> None:
     cur_file = os.path.abspath(__file__)
     torchbench_file = os.path.join(os.path.dirname(cur_file), "torchbench.py")
-    assert os.path.exists(
-        torchbench_file
-    ), f"Torchbench does not exist at {torchbench_file}"
+    assert os.path.exists(torchbench_file), (
+        f"Torchbench does not exist at {torchbench_file}"
+    )
 
     base_args = [
         sys.executable,
