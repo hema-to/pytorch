@@ -166,11 +166,14 @@ def nonstrict_trace(traceable_fn):
 
     1. Supports user-defined class as inputs, as long as the class has been
        registered with pytree.
-    2. In the resulting Dynamo graph, the call to a `nonstrict_trace`-ed function
+    2. Reads to global/captured tensors forces the underlying graph to treat
+       those tensors as constant, and we _assume_ they will not be updated. This
+       is similar to FX tracing.
+    3. In the resulting Dynamo graph, the call to a `nonstrict_trace`-ed function
        will be represented as a call to `torch._higher_order_ops.flat_apply`,
        which takes in the `nonstrict_trace`-ed function and pytree-flattened
        inputs.
-    3. Only the returned function is traceable, and the original function will
+    4. Only the returned function is traceable, and the original function will
        not be. Moreover, `nonstrict_trace` can be used inside a `torch.compile`
        region.
 
